@@ -14,7 +14,6 @@
 
 import importlib
 import json
-import __builtin__
 import uuid
 import warnings
 
@@ -29,6 +28,11 @@ from netman.core.objects.switch_base import SwitchBase
 from netman.api.objects import vlan
 from netman.api.objects import interface
 from netman.api.objects import bond
+
+try:
+    import builtins
+except ImportError:
+    import __builtin__ as builtins
 
 
 def factory(switch_descriptor):
@@ -381,7 +385,7 @@ class RemoteSwitch(SwitchBase):
                     except:
                         exception = NetmanException('{error-module}.{error-class}: {error}'.format(**error))
                 else:
-                    exception = getattr(__builtin__, error["error-class"])(error["error"])
+                    exception = getattr(builtins, error["error-class"])(error["error"])
             else:
                 exception = Exception(error["error"])
 

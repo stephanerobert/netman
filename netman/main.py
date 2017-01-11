@@ -19,7 +19,7 @@ from logging import DEBUG, getLogger
 from flask import request
 from flask.app import Flask
 
-from adapters.threading_lock_factory import ThreadingLockFactory
+from netman.adapters.threading_lock_factory import ThreadingLockFactory
 from netman.adapters.memory_storage import MemoryStorage
 from netman.api.api_utils import RegexConverter
 from netman.api.netman_api import NetmanApi
@@ -52,7 +52,7 @@ SwitchSessionApi(real_switch_factory, switch_session_manager).hook_to(app)
 def load_app(session_inactivity_timeout=None):
     if session_inactivity_timeout:
         switch_session_manager.session_inactivity_timeout = session_inactivity_timeout
-    
+
     return app
 
 
@@ -61,7 +61,7 @@ if __name__ == '__main__':
     parser.add_argument('--host', nargs='?', default="127.0.0.1")
     parser.add_argument('--port', type=int, nargs='?', default=5000)
     parser.add_argument('--session-inactivity-timeout', type=int, nargs='?')
-    
+
     args = parser.parse_args()
 
     params = {}
